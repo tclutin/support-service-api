@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SupportService.Api.src.Controllers.dto;
 using SupportService.Api.src.Entities;
 using SupportService.Api.src.Services.TicketService;
-using System.Text.Json.Serialization;
-using System.Text.Json;
+
 
 namespace SupportService.Api.src.Infrastructure.Repository
 {
