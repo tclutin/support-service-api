@@ -19,6 +19,7 @@ namespace SupportService.Api.src.Controllers
             _userService = UserService;
         }
 
+        [Authorize]
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(RegEmployerDto dto)
         {
@@ -37,6 +38,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> LogIn(AuthEmployerDto dto)
         {
