@@ -19,6 +19,7 @@ namespace SupportService.Api.src.Controllers
             _ticketService = ticketService;
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateTicket(TicketDto dto)
         {
@@ -37,6 +38,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("all-open-tickets")]
         public async Task<IActionResult> GetAllTickets()
         {
@@ -55,6 +57,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("{ticketId}/messages")]
         public async Task<IActionResult> SendTicketMessage(Guid ticketId, [FromBody] MessageDto dto)
         {
@@ -73,6 +76,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{ticketId}/assign")]
         public async Task<IActionResult> AssignToUser(Guid ticketId, [FromBody] AssignTicketDto dto)
         {
@@ -91,6 +95,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{ticketId}/close")]
         public async Task<IActionResult> CloseTicket(Guid ticketId)
         {

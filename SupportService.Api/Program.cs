@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SupportService.Api.Infrastructure.Repository;
+using SupportService.Api.src.Common;
 using SupportService.Api.src.Controllers.Middleware;
 using SupportService.Api.src.Infrastructure.Repository;
 using SupportService.Api.src.Services.TelegramService;
@@ -15,15 +16,6 @@ namespace SupportService.Api
 {
     public class Program
     {
-        private static bool CustomLifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityToken tokenToValidate, TokenValidationParameters @param)
-        {
-            if (expires != null)
-            {
-                return expires > DateTime.UtcNow;
-            }
-            return false;
-        }
-
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -53,7 +45,7 @@ namespace SupportService.Api
                                         ValidAudience = configuration["JWT:Audience"],
 
                                         ValidateLifetime = true,
-                                        LifetimeValidator = CustomLifetimeValidator,
+                                        LifetimeValidator = JwtHelper.CustomLifetimeValidator,
                                         RequireExpirationTime = true,
 
                                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Key"])),
@@ -75,8 +67,11 @@ namespace SupportService.Api
                 }
                 
                 app.UseCors(builder => builder.AllowAnyOrigin());
+
                 app.UseHttpsRedirection();
+
                 app.MapControllers();
+
                 app.Run();
             }
 
