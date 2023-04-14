@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SupportService.Api.src.Controllers.dto;
 using SupportService.Api.src.Services.UserService;
+using SupportService.Api.src.Utilities;
 
 namespace SupportService.Api.src.Controllers
 {
@@ -17,33 +18,39 @@ namespace SupportService.Api.src.Controllers
             _userService = UserService;
         }
 
-        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser(UserDto dto)
         {
             try
             {
                 await _userService.CreateUserAsync(dto);
-                return Ok(new { message = "User successfully created" });
+                return Ok(new ApiResponse<object>
+                {
+                    Success = true,
+                    Data = new { message = "User successfully created" }
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return ex.ToApiErrorResponse();
             }
         }
 
-        [Authorize]
         [HttpGet("{telegramId}/get")]
         public async Task<IActionResult> GetUserByTelegramId(string telegramId)
         {
             try
             {
                 var user = await _userService.GetUserByTelegramId(telegramId);
-                return Ok(user);
+                return Ok(new ApiResponse<object>
+                {
+                    Success = true,
+                    Data = user
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return ex.ToApiErrorResponse();
             }
         }
     }
