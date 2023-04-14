@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SupportService.Api.src.Controllers.dto;
 
 using SupportService.Api.src.Services.UserService;
+using SupportService.Api.src.Utilities;
 
 namespace SupportService.Api.src.Controllers
 {
@@ -18,18 +19,21 @@ namespace SupportService.Api.src.Controllers
             _userService = UserService;
         }
 
-        [Authorize]
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(RegEmployerDto dto)
         {
             try
-            {
+            {   
                 await _userService.RegisterEmployerAsync(dto);
-                return Ok(new { message = "Employer created successfully" });
+                return Ok(new ApiResponse<object>
+                {
+                    Success = true,
+                    Data = new { message = "You have successfully registered" }
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return ex.ToApiErrorResponse();
             }
         }
 
@@ -39,11 +43,15 @@ namespace SupportService.Api.src.Controllers
             try
             {
                 var user = await _userService.LoginEmployerAsync(dto);
-                return Ok(user);
+                return Ok(new ApiResponse<object>
+                {
+                    Success = true,
+                    Data = user
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return ex.ToApiErrorResponse();
             }
         }
     }

@@ -11,8 +11,6 @@ using SupportService.Api.src.Services.UserService;
 using System.Text;
 
 //Task<User?> GetUserByTelegramIdAsync(string TelegramId); проблема
-//2 репозитория
-////проверить, чтобы пользователей не мог создавать больше 1 тикета/добавление hasTicket как вариант
 namespace SupportService.Api
 {
     public class Program
