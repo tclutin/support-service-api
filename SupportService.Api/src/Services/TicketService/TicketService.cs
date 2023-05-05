@@ -109,6 +109,18 @@ namespace SupportService.Api.src.Services.TicketService
             await _ticketRepository.CreateMessageAsync(message);
         }
 
+        public async Task<Ticket> GetTicketByIdAsync(Guid ticketid)
+        {
+           var ticket = await _ticketRepository.GetTicketByIdAsync(ticketid);
+
+            if (ticket == null)
+            {
+                throw new Exception("Ticket not found");
+            }
+
+            return ticket;
+        }
+
         public async Task<IEnumerable<Ticket>> GetAllOpenTicketsAsync()
         {
             return await _ticketRepository.GetAllOpenTicketsAsync();

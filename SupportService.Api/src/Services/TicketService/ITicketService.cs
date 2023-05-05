@@ -9,6 +9,7 @@ namespace SupportService.Api.src.Services.TicketService
         Task SendMessageAsync(Guid ticketId, MessageDto dto);
         Task AssignToUserAsync(Guid ticketId, AssignTicketDto dto);
         Task<IEnumerable<Ticket>> GetAllOpenTicketsAsync();
+        Task<Ticket> GetTicketByIdAsync(Guid ticketid);
         Task CloseTicket(Guid ticketId);
     }
 }
