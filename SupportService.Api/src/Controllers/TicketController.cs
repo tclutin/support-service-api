@@ -38,6 +38,25 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+
+        [HttpGet("{ticketId}/get")]
+        public async Task<IActionResult> GetTicketById(Guid ticketId)
+        {
+            try
+            {
+                var ticket = await _ticketService.GetTicketByIdAsync(ticketId);
+                return Ok(new ApiResponse<object>
+                {
+                    Success = true,
+                    Data = ticket
+                });
+            }
+            catch (Exception ex)
+            {
+                return ex.ToApiErrorResponse();
+            }
+        }
+
         [Authorize]
         [HttpGet("all-open-tickets")]
         public async Task<IActionResult> GetAllTickets()

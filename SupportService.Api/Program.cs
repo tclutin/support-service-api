@@ -11,7 +11,6 @@ using SupportService.Api.src.Services.TicketService;
 using SupportService.Api.src.Services.UserService;
 using System.Text;
 
-//Task<User?> GetUserByTelegramIdAsync(string TelegramId); проблема
 namespace SupportService.Api
 {
     public class Program
@@ -61,7 +60,7 @@ namespace SupportService.Api
             var app = builder.Build();
             {
                 if (app.Environment.IsDevelopment())
-                {
+                {   
                     app.UseSwagger();
                     app.UseSwaggerUI();
                 }
