@@ -18,7 +18,6 @@ namespace SupportService.Api.src.Controllers
             _userService = UserService;
         }
 
-        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser(UserDto dto)
         {
@@ -37,7 +36,6 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet("{telegramId}/get")]
         public async Task<IActionResult> GetUserByTelegramId(string telegramId)
         {

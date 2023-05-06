@@ -19,7 +19,6 @@ namespace SupportService.Api.src.Controllers
             _userService = UserService;
         }
 
-        [Authorize]
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(RegEmployerDto dto)
         {
