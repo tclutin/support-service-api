@@ -19,38 +19,8 @@ namespace SupportService.Api.src.Controllers.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Headers.TryGetValue("Authorization", out var authHeader) && authHeader.ToString().StartsWith("Bearer "))
-            {
-                var token = authHeader.ToString().Substring("Bearer ".Length);
-
-                var validationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = "idk",
-                    ValidAudience = "idk",
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes("aPdSgUkXp2s5v8y/"))
-                };
-
-                try
-                {
-                    var handler = new JwtSecurityTokenHandler();
-                    var user = handler.ValidateToken(token, validationParameters, out var validatedToken);
-
-                    context.Items["jwt"] = token;
-                }
-                catch (Exception)
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    return;
-                }
-            }
-
-            await _next(context);
+            //soon
         }
-
 
     }
 }
