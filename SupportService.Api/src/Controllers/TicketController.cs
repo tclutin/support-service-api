@@ -19,6 +19,7 @@ namespace SupportService.Api.src.Controllers
             _ticketService = ticketService;
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateTicket(TicketDto dto)
         {
@@ -37,6 +38,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("{ticketId}/get")]
         public async Task<IActionResult> GetTicketById(Guid ticketId)
         {
@@ -55,6 +57,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("all-open-tickets")]
         public async Task<IActionResult> GetAllTickets()
         {
@@ -73,6 +76,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("{ticketId}/messages")]
         public async Task<IActionResult> SendTicketMessage(Guid ticketId, [FromBody] MessageDto dto)
         {
@@ -91,6 +95,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{ticketId}/assign")]
         public async Task<IActionResult> AssignToUser(Guid ticketId, [FromBody] AssignTicketDto dto)
         {
@@ -129,20 +134,3 @@ namespace SupportService.Api.src.Controllers
         }
     }
 }
-
-/*
-      [HttpPut("{ticketId}/status")]
-public async Task<IActionResult> UpdateTicketStatus(Guid ticketId, [FromBody] TicketStatusDto dto)
-{
-    try
-    {
-        await _ticketService.UpdateTicketStatusAsync(ticketId, dto);
-        return Ok(new { message = "Ticket status updated" });
-    }
-    catch (Exception ex)
-    {
-        return BadRequest(new { message = ex.Message });
-    }
-}
-
-*/
