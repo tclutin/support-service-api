@@ -25,6 +25,9 @@ namespace SupportService.Api.src.Infrastructure.Repository
                .HasMany(t => t.Messages)
                .WithOne(m => m.Ticket)
                .HasForeignKey(m => m.TicketId);
+
+            modelBuilder.Entity<Message>()
+               .Ignore(m => m.Ticket);
         }
     }
 }
