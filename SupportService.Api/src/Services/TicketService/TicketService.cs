@@ -166,17 +166,41 @@ namespace SupportService.Api.src.Services.TicketService
             await _userRepository.UpdateUserAsync(user);
             await _ticketRepository.UpdateTicketAsync(ticket);
 
-            await _telegramService.SendMessage(createdByUserId.TelegramId, $"[System] Вам назначен сотрудник {user.Username} с рейтингом {user.Rating}");
+            await _telegramService.SendMessage(createdByUserId.TelegramId, $"Вам назначен сотрудник {user.Username} с рейтингом {user.Rating}");
         }
 
-        //добавить закрывтие тикета и очистку полей у пользователей
         public async Task CloseTicket(Guid ticketId)
         {
             var ticket = await _ticketRepository.GetTicketByIdAsync(ticketId);
             if (ticket == null)
+            {
                 throw new Exception("Ticket not found");
+            }
 
             ticket.Status = "close";
+
+            var worker = await _userRepository.GetUserByIdAsync(ticket.AssignedToUserId);
+            if (worker == null)
+            {
+                throw new Exception("Worker not found");
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(ticket.CreatedByUserId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            await _telegramService.SendMessage(user.TelegramId, "Ваш сеанс был завершен. Если у вас остались вопросы, то вы можете снова создать тикет");
+
+            worker.TicketId = null;
+            worker.TelegramId = null;
+            worker.Rating += 1;
+
+            user.TicketId = null;
+
+            await _userRepository.UpdateUserAsync(worker);
+            await _userRepository.UpdateUserAsync(user);
 
             await _ticketRepository.UpdateTicketAsync(ticket);
         }
