@@ -128,7 +128,7 @@ namespace SupportService.Api.src.Services.UserService
             var securityToken = new JwtSecurityToken(
                 issuer: _configuration["JWT:Issuer"],
                 audience: _configuration["JWT:Audience"],
-                expires: DateTime.Now.AddMinutes(3),
+                expires: DateTime.Now.AddMinutes(30),
                 claims: claims,
                 signingCredentials: singingCredentials
                 );

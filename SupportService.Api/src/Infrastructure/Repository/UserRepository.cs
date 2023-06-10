@@ -43,7 +43,7 @@ namespace SupportService.Api.Infrastructure.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<User?> GetUserByIdAsync(Guid id)
+        public async Task<User?> GetUserByIdAsync(Guid? id)
         {
             return await _applicationDbContext.Users
                 .Where(u => u.Id == id)

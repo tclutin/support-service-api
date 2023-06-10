@@ -38,7 +38,7 @@ namespace SupportService.Api.src.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpGet("{ticketId}/get")]
         public async Task<IActionResult> GetTicketById(Guid ticketId)
         {
@@ -134,20 +134,3 @@ namespace SupportService.Api.src.Controllers
         }
     }
 }
-
-/*
-      [HttpPut("{ticketId}/status")]
-public async Task<IActionResult> UpdateTicketStatus(Guid ticketId, [FromBody] TicketStatusDto dto)
-{
-    try
-    {
-        await _ticketService.UpdateTicketStatusAsync(ticketId, dto);
-        return Ok(new { message = "Ticket status updated" });
-    }
-    catch (Exception ex)
-    {
-        return BadRequest(new { message = ex.Message });
-    }
-}
-
-*/
